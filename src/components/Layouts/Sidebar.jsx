@@ -42,7 +42,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-74 flex flex-col">
+    <aside className="w-74 flex flex-col bg-white">
       <div className="flex justify-start items-center p-5 gap-3">
         <img src={logo} alt="logo" />
         <h1 className="text-2xl font-bold">LOGO</h1>
