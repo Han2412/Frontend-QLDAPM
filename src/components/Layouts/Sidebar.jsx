@@ -22,15 +22,15 @@ export default function Sidebar() {
         navigate("/statistics"); // Thống kê
         break;
       case 4:
-        navigate("/products"); // Sản phẩm
-        break;
-      case 5:
         navigate("/bills"); // Hóa đơn
         break;
       case 6:
         navigate("/employees"); // Nhân viên
         break;
       case 7:
+        navigate("/products"); // Sản phẩm
+        break;
+      case 5:
         navigate("/customers"); // Khách hàng
         break;
       case 8:
