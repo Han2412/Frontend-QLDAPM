@@ -1,5 +1,6 @@
 import * as React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { BarChart } from "@mui/x-charts";
 
 const years = [
   new Date(2004, 0, 1),
@@ -29,7 +30,7 @@ const doanh_thu = [
 const lineChartsParams = {
   series: [
     {
-      label: "doanh thu",
+      //   label: "doanh thu",
       data: doanh_thu,
       showMark: false,
     },
@@ -47,15 +48,49 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
 export default function Statistical() {
   return (
-    <LineChart
-      {...lineChartsParams}
-      xAxis={[
-        { data: years, scaleType: "time", valueFormatter: yearFormatter },
-      ]}
-      series={lineChartsParams.series.map((series) => ({
-        ...series,
-        valueFormatter: (v) => (v === null ? "" : currencyFormatter(v)),
-      }))}
-    />
+    <div>
+      <div>
+        <div className="flex justify-center">
+          <h2 className="text-[#4254FB] font-bold text-3xl pb-[20px]">
+            Doanh Thu Theo Tháng
+          </h2>
+        </div>
+        <div className="flex justify-end">
+          <button className="bg-[#4254FB] text-white rounded-2xl p-2 active:bg-[#2439f7]">
+            dự đoán doanh thu
+          </button>
+        </div>
+        <LineChart
+          {...lineChartsParams}
+          xAxis={[
+            { data: years, scaleType: "time", valueFormatter: yearFormatter },
+          ]}
+          series={lineChartsParams.series.map((series) => ({
+            ...series,
+            valueFormatter: (v) => (v === null ? "" : currencyFormatter(v)),
+          }))}
+        />
+      </div>
+
+      <div className="flex justify-center">
+        <h2 className="text-[#4254FB] font-bold text-3xl pb-[20px]">
+          Doanh Thu Theo Món
+        </h2>
+      </div>
+      <BarChart
+        xAxis={[
+          {
+            id: "barCategories",
+            data: ["cafe", "trà sữa", "bồ kho"],
+          },
+        ]}
+        series={[
+          {
+            data: [2, 5, 10],
+          },
+        ]}
+        height={300}
+      />
+    </div>
   );
 }
