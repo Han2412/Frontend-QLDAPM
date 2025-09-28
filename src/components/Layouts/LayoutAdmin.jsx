@@ -12,7 +12,7 @@ export default function AdminLayout() {
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header />
-        <main className="p-6 flex-1 overflow-auto">
+        <main className="p-2 flex-1 overflow-auto">
           <Outlet />
         </main>
       </div>
