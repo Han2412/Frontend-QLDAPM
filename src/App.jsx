@@ -1,13 +1,13 @@
+import React, { Suspense } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
+import routesConfig from "./routes/routesConfig.jsx";
+import LoadingSpinner from "./components/LoadingSpiner.jsx";
 
-import './index.css'
-import Login from './components/Login/Login.jsx'
 function App() {
- 
-  return (
-    <>
-     <Login/>
-    </>
-  )
+  const element = useRoutes(routesConfig);
+
+  return <Suspense fallback={<LoadingSpinner />}>{element}</Suspense>;
 }
 
-export default App
+export default App;

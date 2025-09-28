@@ -1,5 +1,6 @@
-import ImgLogin from "../../assets/images/SBX_WWF_827х900_EN.jpg 1.png";
+import ImgLogin from "../../assets/images/ImgLogin.png";
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
+
 
 export default function Login() {
   return (
@@ -32,9 +33,9 @@ export default function Login() {
             <span className="text-sm  pr-2 text-gray-500">show</span>
           </div>
 
-          <buttton className="bg-[#00B265] text-white text-center p-3">
+          <button className="bg-[#00B265] text-white text-center p-3">
             Đăng nhập
-          </buttton>
+          </button>
           <div className="text-center text-sm text-gray-500">
             <a href="/home" className="hover:text-[#00B265]">Quên mật khẩu </a>
           </div>
