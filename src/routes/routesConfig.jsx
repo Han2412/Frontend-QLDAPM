@@ -6,6 +6,8 @@ import AdminLayout from "../components/Layouts/LayoutAdmin";
 import Statistical from "../pages/Statistical";
 
 const Home = lazy(() => import("../pages/Dashboard/Home"));
+const Productlist = lazy(() => import("../pages/product"));
+
 const routesConfig = [
   {
     path: "/login",
@@ -22,6 +24,7 @@ const routesConfig = [
     children: [
       { path: "/home", index: true, element: <Home /> },
       { path: "/statistics", index: true, element: <Statistical /> },
+      { path: "/product", index: true, element: <Productlist /> },
 
       { index: true, element: <h1>Dashboard Home</h1> },
     ],

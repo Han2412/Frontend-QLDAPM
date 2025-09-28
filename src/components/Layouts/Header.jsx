@@ -9,7 +9,7 @@ export default function Header () {
                 <img src={Avatar} className="w-12 h-12"></img>
                 <div className="flex flex-col font-semibold">
                     <span>Tên nhân viên</span>
-                    <span className="text-sm">Tên chức vụ</span>
+                    <span className="text-sm text-gray-400">Tên chức vụ</span>
                 </div>
             </div>
         </div>
