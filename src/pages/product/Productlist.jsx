@@ -1,5 +1,7 @@
 export default function Productlist () {
     return (
-        <div></div>
+        <div>
+            <h1 className="font-semibold">Danh sách sản phẩm</h1>
+        </div>
     )
 }
