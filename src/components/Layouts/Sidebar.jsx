@@ -5,6 +5,7 @@ import {
   AiOutlineBarChart,
   AiOutlineTeam,
   AiOutlineFileText,
+  AiOutlineLogout
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
@@ -25,15 +26,13 @@ export default function Sidebar() {
       case 4:
         navigate("/product"); // product
         break;
-      case 6:
-        navigate("/employees"); // Nhân viên
+      case 5:
+        navigate("/bills"); // Nhân viên
         break;
       case 7:
         navigate("/products"); // Sản phẩm
         break;
-      case 5:
-        navigate("/customers"); // Khách hàng
-        break;
+    
       case 8:
         navigate("/login"); // Đăng xuất → có thể xóa token trước
         break;

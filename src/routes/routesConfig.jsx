@@ -6,7 +6,7 @@ import AdminLayout from "../components/Layouts/LayoutAdmin";
 import Statistical from "../pages/Statistical";
 import Employee from "../pages/Employee";
 import Orderpage from "../pages/OrderPage";
-
+import Bills from "../pages/Bills";
 const Home = lazy(() => import("../pages/Dashboard/Home"));
 const Productlist = lazy(() => import("../pages/product"));
 
@@ -31,11 +31,9 @@ const routesConfig = [
     children: [
       { path: "/home", index: true, element: <Home /> },
       { path: "/statistics", index: true, element: <Statistical /> },
-
       { path: "/product", index: true, element: <Productlist /> },
-
       { path: "/employees", index: true, element: <Employee /> },
-
+      { path: "/bills", index: true, element: <Bills /> },
 
       { index: true, element: <h1>Dashboard Home</h1> },
     ],
