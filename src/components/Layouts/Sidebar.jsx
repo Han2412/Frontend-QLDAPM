@@ -4,6 +4,7 @@ import {
   AiFillShopping,
   AiOutlineBarChart,
   AiOutlineTeam,
+  AiOutlineFileText,
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
@@ -81,7 +82,7 @@ export default function Sidebar() {
           onClick={() => navigating(5)}
           className="flex items-center justify-start gap-2 font-semibold cursor-pointer hover:bg-[#0BB783] p-4 mx-3 rounded-lg"
         >
-          <AiFillHome className="w-6 h-6" /> Hóa đơn
+          <AiOutlineFileText className="w-6 h-6" /> Hóa đơn
         </li>
 
         <li
@@ -92,17 +93,10 @@ export default function Sidebar() {
         </li>
 
         <li
-          onClick={() => navigating(7)}
-          className="flex items-center justify-start gap-2 font-semibold cursor-pointer hover:bg-[#0BB783] p-4 mx-3 rounded-lg"
-        >
-          <AiFillHome className="w-6 h-6" /> Khách hàng
-        </li>
-
-        <li
           onClick={() => navigating(8)}
           className="flex items-center justify-start gap-2 font-semibold cursor-pointer hover:bg-[#0BB783] p-4 mx-3 rounded-lg"
         >
-          <AiFillHome className="w-6 h-6" /> Đăng xuất
+          <AiOutlineLogout className="w-6 h-6" /> Đăng xuất
         </li>
       </ul>
     </aside>
