@@ -48,7 +48,7 @@ export default function Sidebar() {
         <h1 className="text-2xl font-bold">LOGO</h1>
       </div>
 
-      <ul className="flex flex-col gap-4 mt-8">
+      <ul className="flex flex-col gap-1 mt-8">
         <li
           onClick={() => navigating(1)}
           className="flex items-center justify-start gap-2 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"

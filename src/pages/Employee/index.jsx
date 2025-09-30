@@ -25,47 +25,48 @@ function Employee() {
     switch (status) {
       case "1":
         return (
-          <p className="bg-green-500 text-white rounded-2xl w-[100px] ">
+          <p className="bg-green-500 text-white rounded-lg px-2 py-1 w-[100px] ">
             hoạt động{" "}
           </p>
         );
       case "2":
         return (
-          <p className="bg-red-500 text-white rounded-2xl w-[150px]">
-            kông hoạt động{" "}
+          <p className="bg-red-500 text-white rounded-lg px-2 py-1 w-[150px]">
+            không hoạt động{" "}
           </p>
         );
       default:
         return (
-          <p className="bg-gray-500 text-white rounded-2xl">không xác định</p>
+          <p className="bg-gray-500 text-white rounded-lg px-2 py-1">không xác định</p>
         );
     }
   };
 
   return (
-    <div>
-      <div className="flex justify-end pb-6">
+    <div className="bg-white h-full">
+      <h1 className="text-2xl font-bold pl-4 pt-4">Danh sách nhân viên</h1>
+      <div className="flex justify-end py-2 pr-5">
         <button
           onClick={handleOpenModal}
-          className="bg-[#4254FB] text-white rounded-[50%] p-3 active:bg-[#2439f7] h-[50px] w-[50px]"
+          className="bg-[#4254FB] text-white rounded-[50%] p-2 active:bg-[#2439f7] h-[40px] w-[40px]"
         >
           +
         </button>
       </div>
-      <div className="overflow-hidden rounded-2xl shadow ">
-        <table className="w-full bg-white ">
-          <tr className="border-b border-gray-300 py-2 h-[40px]">
-            <th>STT</th>
-            <th>tên </th>
-            <th>SDT</th>
-            <th>trạng thái</th>
-            <th></th>
+      <div className="overflow-hidden  shadow px-6 ">
+        <table className="w-full bg-white border">
+          <tr className="border-b border-gray-300 py-2 h-[40px] bg-gray-200">
+            <th className="border">STT</th>
+            <th className="border">Tên </th>
+            <th className="border">SDT</th>
+            <th className="border">Trạng thái</th>
+            <th className="border"></th>
           </tr>
           <tr className="text-center py-2 h-[40px]">
-            <td>1</td>
-            <td>Nguyễn Hoài Hân</td>
-            <td>0987654321</td>
-            <td>
+            <td className="border">1</td>
+            <td className="border">Nguyễn Hoài Hân</td>
+            <td className="border">0987654321</td>
+            <td className="border">
               <div className="flex  justify-center">{status("1")}</div>
             </td>
             <td>
@@ -97,13 +98,13 @@ function Employee() {
             </td>
           </tr>
           <tr className="text-center py-2 h-[40px]">
-            <td>1</td>
-            <td>Nguyễn Hoài cường</td>
-            <td>0987654321</td>
-            <td>
+            <td className="border">1</td>
+            <td className="border">Nguyễn Hoài cường</td>
+            <td className="border">0987654321</td>
+            <td className="border">
               <div className="flex  justify-center">{status("2")}</div>
             </td>
-            <td>
+            <td className="border">
               <MdMoreVert onClick={handleClick} />
               <Menu
                 id="long-menu"
