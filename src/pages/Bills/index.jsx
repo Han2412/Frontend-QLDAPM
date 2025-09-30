@@ -53,7 +53,7 @@ export default function Bills() {
         <div className="flex items-center gap-3 font-semibold">
           <h1 className="text-xl">Danh sách hóa đơn</h1>
           {/* filter */}
-          <select className="border text-center">
+          <select className="border text-center py-0.5">
             <option value="All">Tất cả</option>
             <option value="paid">Đã thanh toán</option>
             <option value="Unpaid">Chưa Thanh toán </option>

@@ -7,6 +7,7 @@ import Statistical from "../pages/Statistical";
 import Employee from "../pages/Employee";
 import Orderpage from "../pages/OrderPage";
 import Bills from "../pages/Bills";
+import Sale from "../pages/Sales"
 const Home = lazy(() => import("../pages/Dashboard/Home"));
 const Productlist = lazy(() => import("../pages/product"));
 
@@ -34,7 +35,7 @@ const routesConfig = [
       { path: "/product", index: true, element: <Productlist /> },
       { path: "/employees", index: true, element: <Employee /> },
       { path: "/bills", index: true, element: <Bills /> },
-
+      { path: "/sales", index: true, element: <Sale /> },
       { index: true, element: <h1>Dashboard Home</h1> },
     ],
   },
