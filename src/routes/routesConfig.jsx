@@ -24,7 +24,7 @@ const routesConfig = [
     element: <Orderpage />,
   },
   {
-    path: "/patender_page",
+    path: "/bartender_page",
     element: <PatenderPage />,
   },
   {

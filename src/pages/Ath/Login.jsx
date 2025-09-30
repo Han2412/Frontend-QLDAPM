@@ -2,10 +2,10 @@ import { useState } from "react";
 import ImgLogin from "../../assets/images/ImgLogin.png";
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import { useLoginMutation } from "../../store/Slices/authSlice";
+import { Navigate } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({ name: "", password: "" });
-  console.log("🚀 ~ Login ~ form:", form);
   const [login, { data, error, isLoading }] = useLoginMutation();
 
   const handleChange = (e) => {
@@ -18,9 +18,15 @@ export default function Login() {
     if (res?.data?.token) {
       localStorage.setItem("token", res.data.token); // lưu token
       localStorage.setItem("roleID", res.data.roleID);
-
-      // điều hướng sang trang home
-      window.location.href = "/home";
+      if (res.data.roleID === 1) {
+        Navigate("/home");
+      }
+      if (res.data.roleID === 2) {
+        Navigate("/order_page");
+      }
+      if (res.data.roleID === 3) {
+        Navigate("/order_page");
+      }
     }
   };
   return (
