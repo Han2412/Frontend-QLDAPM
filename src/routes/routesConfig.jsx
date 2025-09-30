@@ -8,6 +8,7 @@ import Employee from "../pages/Employee";
 import Orderpage from "../pages/OrderPage";
 import Bills from "../pages/Bills";
 import Sale from "../pages/Sales"
+
 import PatenderPage from "../pages/PatenderPage";
 const Home = lazy(() => import("../pages/Dashboard/Home"));
 const Productlist = lazy(() => import("../pages/product"));
