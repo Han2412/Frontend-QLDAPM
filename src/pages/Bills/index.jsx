@@ -1,8 +1,10 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { useState } from "react";
-export default function Bills() {
+import ModalDetailBill from "./ModalDetailBill";
 
-   const [invoices] = useState([
+export default function Bills() {
+  const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [invoices] = useState([
     {
       id: 1,
       maHoaDon: "HD001",
@@ -59,7 +61,7 @@ export default function Bills() {
         </div>
         <div className="flex items-center gap-3 border-2 rounded-lg">
           <AiOutlineSearch className=" w-6 h-6 pl-2" />
-          <input type="text" placeholder="Tìm kiếm" className="outline-none" />
+          <input type="text" placeholder="Tìm kiếm" className="outline-none px-2 py-1" />
         </div>
       </div>
 
@@ -89,7 +91,7 @@ export default function Bills() {
                 <td className="px-4 py-2 border">
                   <button
                     className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-                    onClick={() => alert(`Chi tiết hóa đơn: ${item.maHoaDon}`)}
+                    onClick={() => setSelectedInvoice(item)}
                   >
                     Xem
                   </button>
@@ -106,6 +108,13 @@ export default function Bills() {
           </tbody>
         </table>
       </div>
+      {/* Modal */}
+      {selectedInvoice && (
+        <ModalDetailBill
+          invoice={selectedInvoice}
+          onClose={() => setSelectedInvoice(null)}
+        />
+      )}
     </div>
   );
 }
