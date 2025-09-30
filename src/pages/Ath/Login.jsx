@@ -2,11 +2,12 @@ import { useState } from "react";
 import ImgLogin from "../../assets/images/ImgLogin.png";
 import { AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import { useLoginMutation } from "../../store/Slices/authSlice";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({ name: "", password: "" });
   const [login, { data, error, isLoading }] = useLoginMutation();
+  const navigate = useNavigate(); // hook điều hướng
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -14,18 +15,16 @@ export default function Login() {
 
   const handleSubmit = async () => {
     const res = await login(form);
-    console.log("Login Response:", res);
+
     if (res?.data?.token) {
-      localStorage.setItem("token", res.data.token); // lưu token
-      localStorage.setItem("roleID", res.data.roleID);
       if (res.data.roleID === 1) {
-        Navigate("/home");
+        navigate("/home");
       }
       if (res.data.roleID === 2) {
-        Navigate("/order_page");
+        navigate("/order_page");
       }
       if (res.data.roleID === 3) {
-        Navigate("/order_page");
+        navigate("/order_page");
       }
     }
   };
