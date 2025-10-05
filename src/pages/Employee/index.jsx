@@ -32,12 +32,14 @@ function Employee() {
       case "2":
         return (
           <p className="bg-red-500 text-white rounded-lg px-2 py-1 w-[150px]">
-            không hoạt động{" "}
+            không hoạt động
           </p>
         );
       default:
         return (
-          <p className="bg-gray-500 text-white rounded-lg px-2 py-1">không xác định</p>
+          <p className="bg-gray-500 text-white rounded-lg px-2 py-1">
+            không xác định
+          </p>
         );
     }
   };

@@ -23,7 +23,6 @@ function ModalEditEployee({ handleCloseModal, open }) {
     SDT: "",
     password: "",
   });
-  console.log("🚀 ~ ModalEditEployee ~ data:", data);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
