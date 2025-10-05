@@ -3,19 +3,19 @@ import axiosBaseQuery from "./AxiosBaseQuery";
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
-const CategoryAPI = createApi({
-  reducerPath: "CategoryAPI",
+const TableAPI = createApi({
+  reducerPath: "TableAPI",
   baseQuery: axiosBaseQuery({ baseUrl: API_URL }),
   endpoints: (build) => ({
-    GetAllTable: build.query({
+    AddCategory: build.mutation({
       query: (credentials) => ({
-        url: "/api/table",
-        method: "GET",
+        url: "/api/categories/categories",
+        method: "POST",
         data: credentials,
       }),
     }),
   }),
 });
 
-export const { useGetAllTableQuery } = CategoryAPI;
-export default CategoryAPI;
+export const { useAddCategoryMutation } = TableAPI;
+export default TableAPI;

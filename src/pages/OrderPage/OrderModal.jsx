@@ -21,9 +21,6 @@ const dataProduct = [
   { id: 2, name: "Cà phê sữa", price: 25000, category: "Cà phê" },
   { id: 3, name: "Bạc xỉu", price: 30000, category: "Cà phê" },
   { id: 4, name: "Trà đào cam sả", price: 35000, category: "Trà" },
-  { id: 4, name: "Trà đào cam sả", price: 35000, category: "Trà" },
-  { id: 4, name: "Trà đào cam sả", price: 35000, category: "Trà" },
-  { id: 4, name: "Trà đào cam sả", price: 35000, category: "Trà" },
 ];
 
 function OrderModal({ handleCloseModal, open }) {
@@ -79,10 +76,7 @@ function OrderModal({ handleCloseModal, open }) {
           {/* danh sách sản phẩm */}
           <div className="space-y-3 h-[300px] overflow-auto">
             {dataProduct.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between border-b pb-2"
-              >
+              <div className="flex items-center justify-between border-b pb-2">
                 <div>
                   <p className="font-medium">{item.name}</p>
                   <span className="text-gray-500">{item.price} đ</span>
@@ -105,10 +99,7 @@ function OrderModal({ handleCloseModal, open }) {
                 <p className="text-gray-500">Chưa chọn sản phẩm nào</p>
               ) : (
                 orderList.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between mb-2"
-                  >
+                  <div className="flex items-center justify-between mb-2">
                     <span>
                       {item.name} ({item.price}đ)
                     </span>
