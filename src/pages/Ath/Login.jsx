@@ -17,17 +17,23 @@ export default function Login() {
     const res = await login(form);
 
     if (res?.data?.token) {
+      // 👉 Lưu token vào localStorage
+      localStorage.setItem("token", res.data.token);
+
+      // 👉 Có thể lưu roleID nếu cần dùng
+      localStorage.setItem("roleID", res.data.roleID);
+
+      // 👉 Điều hướng theo quyền
       if (res.data.roleID === 1) {
         navigate("/home");
-      }
-      if (res.data.roleID === 2) {
+      } else if (res.data.roleID === 2 || res.data.roleID === 3) {
         navigate("/order_page");
       }
-      if (res.data.roleID === 3) {
-        navigate("/order_page");
-      }
+    } else {
+      alert("Đăng nhập thất bại, vui lòng kiểm tra lại!");
     }
   };
+
   return (
     <div className="flex justify-center space-x-12 items-center h-screen">
       <div className="h-full]">

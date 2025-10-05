@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import { useGetAllItemQuery } from "../../store/Slices/itemSlice";
+import {
+  useCreateOrderMutation,
+  useGetOrrderItemByTableIDQuery,
+} from "../../store/Slices/orderSlice";
+import { useCreatePaymentMutation } from "../../store/Slices/paymentSlide";
 
 const style = {
   position: "absolute",
@@ -16,15 +22,90 @@ const style = {
   p: 4,
 };
 
-const dataProduct = [
-  { id: 1, name: "Cà phê đen", price: 20000, category: "Cà phê" },
-  { id: 2, name: "Cà phê sữa", price: 25000, category: "Cà phê" },
-  { id: 3, name: "Bạc xỉu", price: 30000, category: "Cà phê" },
-  { id: 4, name: "Trà đào cam sả", price: 35000, category: "Trà" },
-];
-
-function OrderModal({ handleCloseModal, open }) {
+function OrderModal({ handleCloseModal, open, dataTable }) {
   const [orderList, setOrderList] = useState([]);
+  console.log("🚀 ~ OrderModal ~ orderList:", orderList);
+  const { data: dataItem } = useGetAllItemQuery();
+  const { data: dataItemOdder } = useGetOrrderItemByTableIDQuery(
+    dataTable?.tableID,
+    {
+      skip: !dataTable?.tableID,
+    }
+  );
+  const [createPayment, { isLoading }] = useCreatePaymentMutation();
+
+  useEffect(() => {
+    console.log(
+      "🚀 ~ OrderModal ~ dataItemOdder?.items:",
+      dataItemOdder?.items
+    );
+    if (dataItemOdder?.items) {
+      const formatted = dataItemOdder.items.map((i) => ({
+        id: i.itemID,
+        name: i.itemName,
+        price: i.price,
+        count: i.quantity,
+        imageURl: i.imageURL,
+      }));
+      setOrderList(formatted);
+    }
+  }, [dataItemOdder]);
+
+  useEffect(() => {
+    if (open === false) {
+      setOrderList([]);
+    }
+  }, [open]);
+  const totalAmount = orderList.reduce(
+    (sum, item) => sum + item.price * item.count,
+    0
+  );
+  const handleCreatePayment = async () => {
+    const pamentdata = {
+      totalAmount: totalAmount,
+      orderid: dataItemOdder.order.id,
+      tableID: dataTable?.tableID,
+    };
+    try {
+      const res = await createPayment(pamentdata).unwrap();
+
+      console.log("✅ Thanh toán thành công:", res);
+      alert("Tạo thanh toán thành công!");
+    } catch (error) {
+      console.error("❌ Lỗi tạo thanh toán:", error);
+      alert("Lỗi khi tạo thanh toán!");
+    }
+  };
+
+  const handleSave = async () => {
+    if (orderList?.length === 0) {
+      alert("Vui lòng chọn ít nhất 1 món!");
+      return;
+    }
+
+    // map dữ liệu orderList về format API cần
+    const items = orderList.map((item) => ({
+      itemID: item.id,
+      quantity: item.count,
+      note: "ít đường", // hoặc có thể thêm input cho ghi chú riêng
+    }));
+
+    const payload = {
+      tableID: dataTable?.tableID || 1,
+      createdBy: 1, // hoặc lấy từ user đăng nhập
+      items,
+    };
+
+    try {
+      const res = await createOrder(payload).unwrap();
+      console.log("Tạo order thành công:", res);
+      alert("Tạo order thành công!");
+      handleCloseModal();
+    } catch (err) {
+      console.error("Lỗi khi tạo order:", err);
+      alert("Không thể tạo order!");
+    }
+  };
 
   const handleAdd = (product) => {
     setOrderList((prev) => {
@@ -75,20 +156,30 @@ function OrderModal({ handleCloseModal, open }) {
           </div>
           {/* danh sách sản phẩm */}
           <div className="space-y-3 h-[300px] overflow-auto">
-            {dataProduct.map((item) => (
-              <div className="flex items-center justify-between border-b pb-2">
-                <div>
-                  <p className="font-medium">{item.name}</p>
-                  <span className="text-gray-500">{item.price} đ</span>
-                </div>
-                <button
-                  onClick={() => handleAdd(item)}
-                  className="bg-green-400 px-3 py-1 rounded-lg text-white hover:bg-green-500"
+            {dataItem ? (
+              dataItem.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between border-b pb-2"
                 >
-                  +
-                </button>
-              </div>
-            ))}
+                  <img src={item?.imageURl} alt="123" className="h-16" />
+                  <div>
+                    <p className="font-medium">{item.name}</p>
+                    <span className="text-gray-500">
+                      {item.price.toLocaleString()} đ
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => handleAdd(item)}
+                    className="bg-green-400 px-3 py-1 rounded-lg text-white hover:bg-green-500"
+                  >
+                    +
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div>Loading...</div>
+            )}
           </div>
 
           {/* giỏ hàng */}
@@ -98,10 +189,11 @@ function OrderModal({ handleCloseModal, open }) {
               {orderList.length === 0 ? (
                 <p className="text-gray-500">Chưa chọn sản phẩm nào</p>
               ) : (
-                orderList.map((item) => (
+                orderList?.map((item) => (
                   <div className="flex items-center justify-between mb-2">
+                    <img src={item?.imageURl} alt="" className="h-16" />
                     <span>
-                      {item.name} ({item.price}đ)
+                      {item.name} ({item.price.toLocaleString()}đ)
                     </span>
                     <div className="flex items-center space-x-2">
                       <button
@@ -126,8 +218,17 @@ function OrderModal({ handleCloseModal, open }) {
 
           {/* nút lưu */}
           <div className="flex justify-end mt-6">
-            <button className="bg-[#4254FB] text-white rounded-2xl py-2 px-4 active:bg-[#1b31f8]">
+            <button
+              onClick={handleSave}
+              className="bg-[#4254FB] text-white rounded-2xl py-2 px-4 active:bg-[#1b31f8]"
+            >
               Lưu
+            </button>
+            <button
+              onClick={handleCreatePayment}
+              className="bg-[#4254FB] text-white rounded-2xl py-2 px-4 active:bg-[#1b31f8]"
+            >
+              thanh toán
             </button>
           </div>
         </Box>
