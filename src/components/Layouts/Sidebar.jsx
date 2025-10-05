@@ -1,11 +1,12 @@
 import logo from "../../assets/images/logo.png";
 import {
-  AiFillHome,
-  AiFillShopping,
+  AiOutlineHome,
+  AiOutlineShopping,
   AiOutlineBarChart,
   AiOutlineTeam,
   AiOutlineFileText,
-  AiOutlineLogout
+  AiOutlineLogout,
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
@@ -27,12 +28,12 @@ export default function Sidebar() {
         navigate("/product"); // product
         break;
       case 5:
-        navigate("/bills"); 
+        navigate("/bills");
         break;
       case 6:
         navigate("/employees"); // Sản phẩm
         break;
-    
+
       case 7:
         navigate("/login"); // Đăng xuất → có thể xóa token trước
         break;
@@ -53,14 +54,14 @@ export default function Sidebar() {
           onClick={() => navigating(1)}
           className="flex items-center justify-start gap-2 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"
         >
-          <AiFillHome className="w-6 h-6" /> Trang chủ
+          <AiOutlineHome className="w-6 h-6" /> Trang chủ
         </li>
 
         <li
           onClick={() => navigating(2)}
           className="flex items-center justify-start gap-2 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"
         >
-          <AiFillShopping className="w-6 h-6" /> Bán hàng
+          <AiOutlineShopping className="w-6 h-6" /> Bán hàng
         </li>
 
         <li
@@ -74,7 +75,7 @@ export default function Sidebar() {
           onClick={() => navigating(4)}
           className="flex items-center justify-start gap-2 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"
         >
-          <AiFillHome className="w-6 h-6" /> Sản phẩm | Menu
+          <AiOutlineShoppingCart className="w-6 h-6" /> Sản phẩm | Menu
         </li>
 
         <li

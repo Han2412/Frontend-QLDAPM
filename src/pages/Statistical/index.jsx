@@ -48,7 +48,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
 export default function Statistical() {
   return (
-    <div>
+    <div className ="bg-white rounded-lg h-full">
       <div>
         <div className="flex justify-center">
           <h2 className="text-[#4254FB] font-bold text-3xl pb-[20px]">
