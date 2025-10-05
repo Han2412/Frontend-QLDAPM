@@ -21,6 +21,13 @@ const CategoryAPI = createApi({
         method: "GET",
       }),
     }),
+    AddCategory: build.mutation({
+      query: (credentials) => ({
+        url: "/api/categories/categories",
+        method: "POST",
+        data: credentials,
+      }),
+    }),
   }),
 });
 
