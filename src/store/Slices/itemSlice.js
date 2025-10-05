@@ -3,13 +3,13 @@ import axiosBaseQuery from "./AxiosBaseQuery";
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
-const CategoryAPI = createApi({
-  reducerPath: "CategoryAPI",
+const ItemAPI = createApi({
+  reducerPath: "ItemAPI",
   baseQuery: axiosBaseQuery({ baseUrl: API_URL }),
   endpoints: (build) => ({
-    GetAllTable: build.query({
+    GetAllItem: build.query({
       query: (credentials) => ({
-        url: "/api/table",
+        url: "/api/item/getAll",
         method: "GET",
         data: credentials,
       }),
@@ -17,5 +17,5 @@ const CategoryAPI = createApi({
   }),
 });
 
-export const { useGetAllTableQuery } = CategoryAPI;
-export default CategoryAPI;
+export const { useGetAllItemQuery } = ItemAPI;
+export default ItemAPI;

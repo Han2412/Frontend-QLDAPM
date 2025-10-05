@@ -1,18 +1,20 @@
 import { useState } from "react";
 import OrderModal from "./OrderModal";
+import { useGetAllTableQuery } from "../../store/Slices/categorySlide";
 
 function ListTable() {
-  const dataListable = [
-    { lable: "b1" },
-    { lable: "b2" },
-    { lable: "b3" },
-    { lable: "b4" },
-    { lable: "b5" },
-    { lable: "b6" },
-  ];
+  const { data, isLoading, error } = useGetAllTableQuery();
+
   const [openModal, setOpenModal] = useState(false);
-  console.log("🚀 ~ ListTable ~ openModal:", openModal);
-  const handleOpenModal = () => setOpenModal(true);
+  const [dataTable, setdataTable] = useState({});
+
+  const handleOpenModal = (id, status) => {
+    setOpenModal(true);
+    setdataTable({
+      tableID: id,
+      tableStatus: status,
+    });
+  };
   const handleCloseModal = () => setOpenModal(false);
   return (
     <div>
@@ -31,17 +33,27 @@ function ListTable() {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 px-3">
-        {dataListable.map((item, index) => (
+        {data?.map((item, index) => (
           <button
             key={index}
-            onClick={handleOpenModal}
-            className="p-6 bg-[#0BB783] text-white rounded-lg hover:bg-[#13e8a8]"
+            onClick={() => handleOpenModal(item.id, item.status)}
+            className={`p-6  text-white rounded-lg hover:bg-[#13e8a8] ${
+              item.status === "0"
+                ? "bg-[#0BB783]"
+                : item.status === "1"
+                ? "bg-[#06f9b0]"
+                : "bg-[#ed873e]"
+            }`}
           >
-            {item.lable}
+            {item.tableNumber}
           </button>
         ))}
       </div>
-      <OrderModal handleCloseModal={handleCloseModal} open={openModal} />
+      <OrderModal
+        handleCloseModal={handleCloseModal}
+        open={openModal}
+        dataTable={dataTable}
+      />
     </div>
   );
 }
