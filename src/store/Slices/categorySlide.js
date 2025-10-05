@@ -14,8 +14,15 @@ const CategoryAPI = createApi({
         data: credentials,
       }),
     }),
+
+    getAllCategories: build.query({
+      query: () => ({
+        url: "/api/categories/get_all",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useAddCategoryMutation } = CategoryAPI;
+export const { useAddCategoryMutation, useGetAllCategoriesQuery } = CategoryAPI;
 export default CategoryAPI;

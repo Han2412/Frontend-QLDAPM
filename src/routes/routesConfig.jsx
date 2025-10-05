@@ -27,22 +27,19 @@ const routesConfig = [
     path: "/bartender_page",
     element: <PatenderPage />,
   },
-  {
-    path: "/",
-    element: React.createElement(Home),
-  },
+
   {
     path: "/",
     element: <AdminLayout />,
 
     children: [
-      { path: "/home", index: true, element: <Home /> },
+    
       { path: "/statistics", index: true, element: <Statistical /> },
       { path: "/product", index: true, element: <Productlist /> },
       { path: "/employees", index: true, element: <Employee /> },
       { path: "/bills", index: true, element: <Bills /> },
       { path: "/sales", index: true, element: <Sale /> },
-      { index: true, element: <h1>Dashboard Home</h1> },
+      { index: true, element: <Home /> },
     ],
   },
   { path: "*", element: <NotFound /> },

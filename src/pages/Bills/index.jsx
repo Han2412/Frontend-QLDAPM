@@ -68,7 +68,7 @@ export default function Bills() {
       {/* Table */}
       <div className="overflow-x-auto mt-10 px-5">
         <table className="min-w-full border border-gray-200">
-          <thead className="bg-gray-100">
+          <thead className="bg-[#0BB783]">
             <tr>
               <th className="px-4 py-2 border">Mã hóa đơn</th>
               <th className="px-4 py-2 border">Ngày</th>

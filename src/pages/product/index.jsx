@@ -81,9 +81,9 @@ export default function Productlist() {
           ))}
         </div>
         {/* Table product  */}
-        <table className="border w-7xl rounded-lg mt-12  mx-4 pl-10 ">
+        <table className="border w-8xl rounded-lg mt-12  mx-4 pl-10 ">
           <thead>
-            <tr className="bg-gray-200 ">
+            <tr className="bg-[#0BB783] ">
               <th className="border p-2">Tên món</th>
               <th className="border p-2">Loại </th>
               <th className="border p-2">Giá</th>
