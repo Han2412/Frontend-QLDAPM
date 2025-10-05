@@ -7,10 +7,10 @@ const CategoryAPI = createApi({
   reducerPath: "CategoryAPI",
   baseQuery: axiosBaseQuery({ baseUrl: API_URL }),
   endpoints: (build) => ({
-    AddCategory: build.mutation({
+    GetAllTable: build.query({
       query: (credentials) => ({
-        url: "/api/categories/categories",
-        method: "POST",
+        url: "/api/table",
+        method: "GET",
         data: credentials,
       }),
     }),
