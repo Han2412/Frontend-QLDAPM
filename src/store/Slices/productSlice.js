@@ -6,6 +6,7 @@ const API_URL = import.meta.env.VITE_APP_API_URL;
 const ProductAPI = createApi({
   reducerPath: "ProductAPI",
   baseQuery: axiosBaseQuery({ baseUrl: API_URL }),
+  tagTypes: ["Item"],
   endpoints: (build) => ({
     // Create a new product
     addProduct: build.mutation({
@@ -14,22 +15,25 @@ const ProductAPI = createApi({
         method: "POST",
         data: credentials,
       }),
+      invalidatesTags: ["Item"],
     }),
 
     // Get all products
     getAllProducts: build.query({
       query: () => ({
         url: "/api/item/getAll",
-        method: "GET",
+        method: "GET",  
       }),
+      providesTags: ["Item"],
     }),
-    
+
     updateProduct: build.mutation({
-      query: ({ id, ...data }) => ({
+      query: ({ id, body }) => ({
         url: `/api/item/update/${id}`,
         method: "PUT",
-        data, // { name, price, categoryID, image }
+        data: body, // { name, price, categoryID, image }
       }),
+      invalidatesTags: ["Item"],
     }),
 
     // Get products by category
@@ -39,6 +43,14 @@ const ProductAPI = createApi({
         method: "GET",
       }),
     }),
+
+    deleteProduct: build.mutation({
+      query: (id) => ({
+        url: `/api/item/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Item"],
+    }),
   }),
 });
 
@@ -47,6 +59,7 @@ export const {
   useGetAllProductsQuery,
   useGetProductsByCategoryQuery,
   useUpdateProductMutation,
+  useDeleteProductMutation,
 } = ProductAPI;
 
 export default ProductAPI;

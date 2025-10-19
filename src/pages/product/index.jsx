@@ -4,17 +4,16 @@ import ModalAddCategor from "./ModalAddCategor";
 import ModalEditProduct from "./ModalEditProduct";
 import { useGetAllCategoriesQuery } from "../../store/Slices/categorySlide";
 import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
-import { useGetAllProductsQuery } from "../../store/Slices/productSlice";
+import {
+  useGetAllProductsQuery,
+  useDeleteProductMutation,
+} from "../../store/Slices/productSlice";
 
 export default function Productlist() {
   const [isOpen, setIsOpen] = useState(false);
-  const { data: categories = [],} = useGetAllCategoriesQuery();
- 
-  const {
-    data: products = [],
-    setProducts,
-   
-  } = useGetAllProductsQuery();
+  const { data: categories = [] } = useGetAllCategoriesQuery();
+
+  const { data: products = [], setProducts } = useGetAllProductsQuery();
   const [isOpenModaladdCategory, setIsOpenodaladdCategor] = useState(0);
 
   const [newProduct, setNewProduct] = useState({
@@ -37,6 +36,18 @@ export default function Productlist() {
   const handleEdit = (product) => {
     setSelectedProduct(product);
     setIsEditOpen(true);
+  };
+
+  const [deleteproduct] = useDeleteProductMutation();
+
+  const handleDelete = async (productId) => {
+    if (!window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) return;
+    try {
+      await deleteproduct(productId).unwrap();
+    } catch (err) {
+      console.error("Lỗi khi xóa:", err);
+      alert("Xóa thất bại!");
+    }
   };
 
   return (
@@ -93,7 +104,6 @@ export default function Productlist() {
                 <td className="border p-2 text-center ">{p.price}</td>
                 <td className="border-t p-2 text-center  flex justify-center gap-2">
                   <button
-                   
                     size="sm "
                     className=" bg-amber-400 hover:bg-amber-200 px-3 py-1 rounded-lg"
                     onClick={() => handleEdit(p)}
@@ -101,7 +111,7 @@ export default function Productlist() {
                     <AiFillEdit className="w-6 h-6 mr-1" />
                   </button>
                   <button
-                
+                    onClick={() => handleDelete(p.id)}
                     size="sm"
                     className="bg-red-600 hover:bg-red-400 px-3 py-1 rounded-lg"
                   >

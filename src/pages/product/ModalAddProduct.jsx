@@ -90,7 +90,6 @@ export default function ModalAddProduct({ isOpen, onClose }) {
               setNewProduct({ ...newProduct, price: e.target.value })
             }
           />
-
           {/* Image upload */}
           <div className="flex flex-col gap-2">
             <label className="font-medium text-gray-700">Hình ảnh</label>
@@ -100,7 +99,6 @@ export default function ModalAddProduct({ isOpen, onClose }) {
               onChange={handleImageChange}
               className="border p-2 rounded-lg"
             />
-
             {/* Preview selected image */}
             {previewImage && (
               <img

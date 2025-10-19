@@ -46,9 +46,9 @@ export default function ModalEditProduct({ isOpen, onClose, product }) {
     formData.append("name", editedProduct.name);
     formData.append("price", editedProduct.price);
     formData.append("categoryID", editedProduct.categoryID);
-    formData.append("isavailable", editedProduct.isavailable);
+    formData.append("isvAilable", editedProduct.isavailable);
     if (editedProduct.imageFile) {
-      formData.append("image", editedProduct.imageFile);
+      formData.append("imageURL", editedProduct.imageFile);
     }
 
     try {
