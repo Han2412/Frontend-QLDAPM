@@ -30,6 +30,13 @@ const PaymentAPI = createApi({
         data, // { totalAmount, orderid }
       }),
     }),
+
+    getRevenueByYear: build.query({
+      query: (year) => ({
+        url: `/api/payment/stats/year/${year}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -37,6 +44,7 @@ export const {
   useGetPaymentsByDateRangeQuery,
   useGetPaymentByIdQuery,
   useCreatePaymentMutation,
+  useGetRevenueByYearQuery,
 } = PaymentAPI;
 
 export default PaymentAPI;

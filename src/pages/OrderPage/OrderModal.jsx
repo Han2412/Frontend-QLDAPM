@@ -33,6 +33,7 @@ function OrderModal({ handleCloseModal, open, dataTable }) {
     }
   );
   const [createPayment, { isLoading }] = useCreatePaymentMutation();
+  const [createOrder, { isLoading: isloadingOrder }] = useCreateOrderMutation();
 
   useEffect(() => {
     console.log(
@@ -166,7 +167,7 @@ function OrderModal({ handleCloseModal, open, dataTable }) {
                   <div>
                     <p className="font-medium">{item.name}</p>
                     <span className="text-gray-500">
-                      {item.price.toLocaleString()} đ
+                      {item.price?.toLocaleString()} đ
                     </span>
                   </div>
                   <button
@@ -193,7 +194,7 @@ function OrderModal({ handleCloseModal, open, dataTable }) {
                   <div className="flex items-center justify-between mb-2">
                     <img src={item?.imageURl} alt="" className="h-16" />
                     <span>
-                      {item.name} ({item.price.toLocaleString()}đ)
+                      {item.name} ({item.price?.toLocaleString()}đ) 
                     </span>
                     <div className="flex items-center space-x-2">
                       <button
