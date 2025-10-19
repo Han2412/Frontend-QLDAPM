@@ -19,8 +19,16 @@ const ProductAPI = createApi({
     // Get all products
     getAllProducts: build.query({
       query: () => ({
-        url: "/api/item/get_all",
+        url: "/api/item/getAll",
         method: "GET",
+      }),
+    }),
+    
+    updateProduct: build.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/api/item/update/${id}`,
+        method: "PUT",
+        data, // { name, price, categoryID, image }
       }),
     }),
 
@@ -38,6 +46,7 @@ export const {
   useAddProductMutation,
   useGetAllProductsQuery,
   useGetProductsByCategoryQuery,
+  useUpdateProductMutation,
 } = ProductAPI;
 
 export default ProductAPI;
