@@ -35,6 +35,9 @@ export default function Sidebar() {
         break;
 
       case 7:
+        localStorage.removeItem("token");
+        localStorage.removeItem("roleID");
+
         navigate("/login"); // Đăng xuất → có thể xóa token trước
         break;
       default:
@@ -75,7 +78,7 @@ export default function Sidebar() {
           onClick={() => navigating(4)}
           className="flex items-center justify-start gap-6 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"
         >
-          <AiOutlineShoppingCart className="w-6 h-6" /> Sản phẩm 
+          <AiOutlineShoppingCart className="w-6 h-6" /> Sản phẩm
         </li>
 
         <li
@@ -93,7 +96,7 @@ export default function Sidebar() {
         </li>
 
         <li
-          onClick={() => navigating(8)}
+          onClick={() => navigating(7)}
           className="flex items-center justify-start gap-6 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"
         >
           <AiOutlineLogout className="w-6 h-6" /> Đăng xuất

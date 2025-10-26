@@ -7,41 +7,56 @@ import Statistical from "../pages/Statistical";
 import Employee from "../pages/Employee";
 import Orderpage from "../pages/OrderPage";
 import Bills from "../pages/Bills";
-import Sale from "../pages/Sales"
-
+import Sale from "../pages/Sales";
+import ProtectedRoute from "./ProtectedRoute";
 import PatenderPage from "../pages/PatenderPage";
+
 const Home = lazy(() => import("../pages/Dashboard/Home"));
 const Productlist = lazy(() => import("../pages/product"));
 
 const routesConfig = [
   {
     path: "/login",
-    element: React.createElement(Login),
+    element: <Login />,
   },
 
+  // Nhân viên phục vụ (roleID = 2)
   {
     path: "/order_page",
-    element: <Orderpage />,
+    element: (
+      <ProtectedRoute allowedRoles={[2]}>
+        <Orderpage />
+      </ProtectedRoute>
+    ),
   },
+
+  // Bartender (roleID = 3)
   {
     path: "/bartender_page",
-    element: <PatenderPage />,
+    element: (
+      <ProtectedRoute allowedRoles={[3]}>
+        <PatenderPage />
+      </ProtectedRoute>
+    ),
   },
 
+  // Admin (roleID = 1)
   {
     path: "/",
-    element: <AdminLayout />,
-
+    element: (
+      <ProtectedRoute allowedRoles={[1]}>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
-    
       { path: "/statistics", index: true, element: <Statistical /> },
       { path: "/product", index: true, element: <Productlist /> },
       { path: "/employees", index: true, element: <Employee /> },
       { path: "/bills", index: true, element: <Bills /> },
       { path: "/sales", index: true, element: <Sale /> },
-      { index: true, element: <Home /> },
     ],
   },
+
   { path: "*", element: <NotFound /> },
 ];
 
