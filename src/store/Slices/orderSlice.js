@@ -35,6 +35,13 @@ const OrderAPI = createApi({
       }),
       providesTags: ["Order"], //  Cho phép refetch tự động khi Order bị invalidated
     }),
+    getOrderByID: build.query({
+      query: (id) => ({
+        url: `/api/order/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Order"], //  Cho phép refetch tự động khi Order bị invalidated
+    }),
 
     //  Cập nhật trạng thái đơn hàng
     updateOrderStatus: build.mutation({
@@ -52,6 +59,7 @@ export const {
   useGetOrrderItemByTableIDQuery,
   useGetAllOrderQuery,
   useUpdateOrderStatusMutation,
+  useGetOrderByIDQuery,
 } = OrderAPI;
 
 export default OrderAPI;

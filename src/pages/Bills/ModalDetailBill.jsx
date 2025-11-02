@@ -1,18 +1,19 @@
 import React from "react";
-import { useGetOrrderItemByTableIDQuery } from "../../store/Slices/orderSlice";
+import { useGetOrderByIDQuery } from "../../store/Slices/orderSlice";
 
 export default function ModalDetailBill({ invoice, onClose }) {
-  const tableID = invoice?.order?.tableID;
+  const orderID = invoice?.order?.id;
 
   //  Gọi API theo tableID
-  const { data, isLoading, error } = useGetOrrderItemByTableIDQuery(tableID, {
-    skip: !tableID, // tránh lỗi khi chưa có tableID
+  const { data, isLoading, error } = useGetOrderByIDQuery(orderID, {
+    skip: !orderID, // tránh lỗi khi chưa có tableID
   });
+  console.log("🚀 ~ ModalDetailBill ~ data:", data);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Lỗi tải dữ liệu chi tiết</div>;
 
-  const order = data?.order;
+  const order = data;
   const items = data?.items || [];
 
   return (
@@ -31,8 +32,12 @@ export default function ModalDetailBill({ invoice, onClose }) {
 
         <div className="mb-4 text-sm text-gray-600">
           <p>Mã đơn hàng: {order?.id}</p>
+          <p>NV tạo: {order?.createdByName}</p>
+
           <p>Ngày tạo: {new Date(order?.createdAt).toLocaleString("vi-VN")}</p>
-          <p>Trạng thái: {order?.status === "1" ? "Hoàn thành" : "Đang xử lý"}</p>
+          <p>
+            Trạng thái: {order?.status === "1" ? "Hoàn thành" : "Đang xử lý"}
+          </p>
         </div>
 
         <table className="w-full border">
@@ -57,7 +62,9 @@ export default function ModalDetailBill({ invoice, onClose }) {
                 </td>
                 <td className="p-2 border">{item.itemName}</td>
                 <td className="p-2 border">{item.quantity}</td>
-                <td className="p-2 border">{item.price.toLocaleString("vi-VN")}₫</td>
+                <td className="p-2 border">
+                  {item.price?.toLocaleString("vi-VN")}₫
+                </td>
                 <td className="p-2 border">{item.note}</td>
               </tr>
             ))}
