@@ -88,7 +88,7 @@ function OrderModal({ handleCloseModal, open, dataTable }) {
     const items = orderList.map((item) => ({
       itemID: item.id,
       quantity: item.count,
-      note: "ít đường", // hoặc có thể thêm input cho ghi chú riêng
+      note: "", // hoặc có thể thêm input cho ghi chú riêng
     }));
 
     const payload = {
@@ -194,7 +194,7 @@ function OrderModal({ handleCloseModal, open, dataTable }) {
                   <div className="flex items-center justify-between mb-2">
                     <img src={item?.imageURl} alt="" className="h-16" />
                     <span>
-                      {item.name} ({item.price?.toLocaleString()}đ) 
+                      {item.name} ({item.price?.toLocaleString()}đ)
                     </span>
                     <div className="flex items-center space-x-2">
                       <button

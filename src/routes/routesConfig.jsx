@@ -10,6 +10,7 @@ import Bills from "../pages/Bills";
 import Sale from "../pages/Sales";
 import ProtectedRoute from "./ProtectedRoute";
 import PatenderPage from "../pages/PatenderPage";
+import Table from "../pages/table";
 
 const Home = lazy(() => import("../pages/Dashboard/Home"));
 const Productlist = lazy(() => import("../pages/product"));
@@ -54,6 +55,7 @@ const routesConfig = [
       { path: "/employees", index: true, element: <Employee /> },
       { path: "/bills", index: true, element: <Bills /> },
       { path: "/sales", index: true, element: <Sale /> },
+      { path: "/table", index: true, element: <Table /> },
     ],
   },
 
