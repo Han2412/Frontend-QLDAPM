@@ -9,7 +9,7 @@ const PaymentAPI = createApi({
   endpoints: (build) => ({
     getPaymentsByDateRange: build.query({
       query: ({ fromDate, toDate }) => ({
-        url: `/api/payment?fromDate=${fromDate}&toDate=${toDate}`,
+        url: `/api/payment/getall?fromDate=${fromDate}&toDate=${toDate}`,
         method: "GET",
       }),
     }),

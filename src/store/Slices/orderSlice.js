@@ -8,41 +8,41 @@ const OrderAPI = createApi({
   baseQuery: axiosBaseQuery({ baseUrl: API_URL }),
   tagTypes: ["Order"], // 👈 Thêm tag để quản lý cache
   endpoints: (build) => ({
-    // 🟢 Tạo đơn hàng mới
+    //  Tạo đơn hàng mới
     createOrder: build.mutation({
       query: (body) => ({
         url: "/api/order/create",
         method: "POST",
         data: body,
       }),
-      invalidatesTags: ["Order"], // ✅ Cập nhật lại danh sách đơn hàng sau khi tạo
+      invalidatesTags: ["Order"], //  Cập nhật lại danh sách đơn hàng sau khi tạo
     }),
 
-    // 🟢 Lấy đơn hàng theo bàn
+    //  Lấy đơn hàng theo bàn
     getOrrderItemByTableID: build.query({
       query: (tableID) => ({
         url: `/api/order/table/${tableID}`,
         method: "GET",
       }),
-      providesTags: ["Order"], // ✅ Cung cấp tag để các mutation khác biết refetch
+      providesTags: ["Order"], //  Cung cấp tag để các mutation khác biết refetch
     }),
 
-    // 🟢 Lấy toàn bộ đơn hàng
+    //  Lấy toàn bộ đơn hàng
     getAllOrder: build.query({
       query: () => ({
         url: `/api/order`,
         method: "GET",
       }),
-      providesTags: ["Order"], // ✅ Cho phép refetch tự động khi Order bị invalidated
+      providesTags: ["Order"], //  Cho phép refetch tự động khi Order bị invalidated
     }),
 
-    // 🟡 Cập nhật trạng thái đơn hàng
+    //  Cập nhật trạng thái đơn hàng
     updateOrderStatus: build.mutation({
       query: ({ id, status }) => ({
         url: `/api/order/updateStatusOrder/${id}/${status}`,
         method: "PUT",
       }),
-      invalidatesTags: ["Order"], // ✅ Làm mới danh sách sau khi cập nhật
+      invalidatesTags: ["Order"], //  Làm mới danh sách sau khi cập nhật
     }),
   }),
 });
