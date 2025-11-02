@@ -8,6 +8,7 @@ import {
   AiOutlineLogout,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { MdTableRestaurant } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
@@ -39,6 +40,10 @@ export default function Sidebar() {
         localStorage.removeItem("roleID");
 
         navigate("/login"); // Đăng xuất → có thể xóa token trước
+        break;
+
+      case 8:
+        navigate("/table");
         break;
       default:
         navigate("/notfound");
@@ -93,6 +98,12 @@ export default function Sidebar() {
           className="flex items-center justify-start gap-6 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"
         >
           <AiOutlineTeam className="w-6 h-6" /> Nhân viên
+        </li>
+        <li
+          onClick={() => navigating(8)}
+          className="flex items-center justify-start gap-6 font-semibold cursor-pointer hover:bg-[#0BB783] hover:text-white p-4 mx-3 rounded-lg"
+        >
+          <MdTableRestaurant /> Bàn
         </li>
 
         <li
