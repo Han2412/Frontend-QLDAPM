@@ -25,7 +25,7 @@ export default function Login() {
 
       // 👉 Điều hướng theo quyền
       if (res.data.roleID === 1) {
-        navigate("/home");
+        navigate("/");
       } else if (res.data.roleID === 2 || res.data.roleID === 3) {
         navigate("/order_page");
       }
