@@ -15,6 +15,7 @@ export default function ProtectedRoute({ children, allowedRoles }) {
   if (allowedRoles && !allowedRoles.includes(roleID)) {
     // Nếu role là 2 → cho về order_page
     if (roleID === 2) return <Navigate to="/order_page" replace />;
+    if (roleID === 3) return <Navigate to="/bartender_page" replace />;
     return <Navigate to="/login" replace />;
   }
 

@@ -18,8 +18,8 @@ function OrderCard({ order }) {
   return (
     <div className="border-4 rounded-2xl w-[20%] h-[500px] p-6 border-[#0bb7838e] bg-white ">
       <div className="flex justify-between text-[18px] font-bold pb-6 text-[#0bb783] ">
-        <h2>NV:{order.staff} </h2>
-        <p>bàn:{order.table.tableNumber}</p>
+        <h2>NV:{order?.staff} </h2>
+        <p>bàn:{order.table?.tableNumber}</p>
       </div>
       <div className=" h-full w-full pb-12">
         <div className=" w-full h-full border-4  border-[#0bb7838e]">
@@ -27,10 +27,10 @@ function OrderCard({ order }) {
             {order.items.map((item, index) => (
               <li className="p-4 text-gray-700">
                 <div className="flex justify-between font-bold text-2xl">
-                  <p> {item.itemName}</p>
-                  <p>sl:{item.quantity}</p>
+                  <p> {item?.itemName}</p>
+                  <p>sl:{item?.quantity}</p>
                 </div>
-                <span>note: {item.note}</span>
+                <span>note: {item?.note}</span>
               </li>
             ))}
           </ul>
