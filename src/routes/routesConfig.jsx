@@ -1,7 +1,7 @@
 import React, { lazy } from "react";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "../pages/Ath/Login";
-import NotFound from "../pages/NotFound/Notfound";
+import NotFound from "../pages/NotFound/NotFound";
 import AdminLayout from "../components/Layouts/LayoutAdmin";
 import Statistical from "../pages/Statistical";
 import Employee from "../pages/Employee";
