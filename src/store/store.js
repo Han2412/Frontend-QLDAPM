@@ -8,6 +8,9 @@ import ItemAPI from "./Slices/itemSlice";
 import OrderAPI from "./Slices/orderSlice";
 import PaymentAPI from "./Slices/paymentSlide";
 import ProductAPI from "./Slices/productSlice";
+import statisticAPI from "./Slices/statisticSlice";
+import predictRevenueAPI from "./Slices/predictRevenueSlice";
+
 const store = configureStore({
   reducer: {
     [AuthAPI.reducerPath]: AuthAPI.reducer,
@@ -17,6 +20,8 @@ const store = configureStore({
     [OrderAPI.reducerPath]: OrderAPI.reducer,
     [PaymentAPI.reducerPath]: PaymentAPI.reducer,
     [ProductAPI.reducerPath]: ProductAPI.reducer,
+    [statisticAPI.reducerPath]: statisticAPI.reducer,
+    [predictRevenueAPI.reducerPath]: predictRevenueAPI.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -26,7 +31,9 @@ const store = configureStore({
       ItemAPI.middleware,
       OrderAPI.middleware,
       PaymentAPI.middleware,
-      ProductAPI.middleware
+      ProductAPI.middleware,
+      statisticAPI.middleware,
+      predictRevenueAPI.middleware
     ),
 });
 

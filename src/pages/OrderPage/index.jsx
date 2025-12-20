@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 
 function Orderpage() {
   const [isDoneOrder, setIsDoneOrder] = useState(false);
-  console.log("🚀 ~ Orderpage ~ isDoneOrder:", isDoneOrder);
 
   useEffect(() => {
     const handleOrderDone = (data) => {
@@ -14,7 +13,9 @@ function Orderpage() {
       console.log("Order đã hoàn thành:", data);
 
       // 🔔 Hiển thị toast ngay khi nhận socket
-      toast.info(`Order ${data.orderID} đã hoàn thành! Hãy đến quầy bar để nhận đơn`);
+      toast.info(
+        `Order ${data.orderID} đã hoàn thành! Hãy đến quầy bar để nhận đơn`
+      );
     };
 
     socket.on("orderDone", handleOrderDone);
