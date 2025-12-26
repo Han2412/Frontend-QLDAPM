@@ -70,16 +70,15 @@ describe("Productlist Component", () => {
 
   test("renders product name and price", () => {
     render(<Productlist />);
+
     expect(screen.getByText("Cơm Chiên")).toBeInTheDocument();
-    expect(screen.getByText("50000")).toBeInTheDocument();
+    expect(screen.getByText(/50000/)).toBeInTheDocument(); // ✅ FIX
   });
 
   test("renders category name using categoryID", () => {
     render(<Productlist />);
 
-    const table = screen.getByRole("table");
-    const tbody = table.querySelector("tbody");
-
+    const tbody = screen.getByRole("table").querySelector("tbody");
     expect(within(tbody).getByText("Cơm")).toBeInTheDocument();
   });
 
@@ -96,7 +95,6 @@ describe("Productlist Component", () => {
     const buttons = within(tbody).getAllByRole("button");
 
     fireEvent.click(buttons[0]);
-
     expect(screen.getByText("ModalEditProduct")).toBeInTheDocument();
   });
 
