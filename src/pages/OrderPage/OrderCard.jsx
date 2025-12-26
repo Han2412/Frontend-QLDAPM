@@ -25,9 +25,12 @@ function OrderCard({ order }) {
         <div className=" w-full h-full border-4  border-[#0bb7838e]">
           <ul>
             {order.items.map((item, index) => (
-              <li className="p-4 text-gray-700">
+              <li
+                key={`${order.id}-${item.itemName}-${index}`}
+                className="p-4 text-gray-700"
+              >
                 <div className="flex justify-between font-bold text-2xl">
-                  <p> {item?.itemName}</p>
+                  <p>{item?.itemName}</p>
                   <p>sl:{item?.quantity}</p>
                 </div>
                 <span>note: {item?.note}</span>
