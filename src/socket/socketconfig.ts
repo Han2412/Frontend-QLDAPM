@@ -1,7 +1,6 @@
-// import { io } from "socket.io-client";
-
 import { io } from "socket.io-client";
 
 export const socket = io("https://qldapm-qlcf-be.onrender.com", {
-  transports: ["websocket"], // 🔥 QUAN TRỌNG
+  transports: ["websocket"],
+  withCredentials: true,
 });
