@@ -1,64 +1,77 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Employee from "../../src/pages/Employee/index";
 
-// Mock the hooks
+/* ================= MOCK RTK QUERY ================= */
 jest.mock("../../src/store/Slices/authSlice", () => ({
-  useGetAllAccountQuery: jest.fn(() => ({
-    data: [
-      { id: "1", name: "John Doe", email: "john@example.com", status: 1 },
-      { id: "2", name: "Jane Smith", email: "jane@example.com", status: 1 },
-    ],
-    refetch: jest.fn(),
+  /* ----- LIST ACCOUNT ----- */
+  useGetAllAccountQuery: () => ({
+    data: [],
     isLoading: false,
-  })),
-  useUpdateAccountMutation: jest.fn(() => [jest.fn()]),
+    refetch: jest.fn(),
+  }),
+
+  /* ----- GET ONE ACCOUNT ----- */
+  useGetOneAccountQuery: () => ({
+    data: null,
+    isLoading: false,
+    isSuccess: false,
+    refetch: jest.fn(),
+  }),
+
+  /* ----- UPDATE ACCOUNT ----- */
+  useUpdateAccountMutation: () => [
+    jest.fn(),
+    { isLoading: false },
+  ],
+
+  /* ----- REGISTER ACCOUNT ----- */
+  useRegisterMutation: () => [
+    jest.fn(),
+    { isLoading: false },
+  ],
 }));
 
-// Mock Material-UI components
-jest.mock("@mui/material/Menu", () => {
-  return jest.fn(({ children }) => <div data-testid="menu">{children}</div>);
-});
+/* ================= MOCK MUI ================= */
+jest.mock("@mui/material/Menu", () => ({ children }) => (
+  <div data-testid="menu">{children}</div>
+));
 
-jest.mock("@mui/material/MenuItem", () => {
-  return jest.fn(({ children, onClick }) => (
-    <div data-testid="menu-item" onClick={onClick}>
-      {children}
-    </div>
-  ));
-});
+jest.mock("@mui/material/MenuItem", () => ({ children }) => (
+  <div data-testid="menu-item">{children}</div>
+));
 
 describe("Employee Component", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  test("renders Employee page", () => {
-    const { container } = render(<Employee />);
-    expect(container).toBeInTheDocument();
-  });
-
-  test("displays employee list", () => {
+  /* ---------- TITLE ---------- */
+  test("renders employee page title", () => {
     render(<Employee />);
-    // The component should render without errors
-    const { container } = render(<Employee />);
-    expect(container).toBeInTheDocument();
+    expect(
+      screen.getByText("Danh sách nhân viên")
+    ).toBeInTheDocument();
   });
 
-  test("has proper styling", () => {
-    const { container } = render(<Employee />);
-    const wrapper = container.firstChild;
-    expect(wrapper).toBeInTheDocument();
-  });
-
-  test("renders menu options", () => {
+  /* ---------- ADD BUTTON ---------- */
+  test("renders add employee button", () => {
     render(<Employee />);
-    const menu = screen.getByTestId("menu");
-    expect(menu).toBeInTheDocument();
+    expect(screen.getByText("+")).toBeInTheDocument();
   });
 
-  test("manages state correctly", () => {
-    const { container } = render(<Employee />);
-    expect(container).toBeInTheDocument();
+  /* ---------- TABLE STRUCTURE ---------- */
+  test("renders employee table headers", () => {
+    render(<Employee />);
+
+    expect(screen.getByText("STT")).toBeInTheDocument();
+    expect(screen.getByText("Tên")).toBeInTheDocument();
+    expect(screen.getByText("SDT")).toBeInTheDocument();
+    expect(screen.getByText("Chức vụ")).toBeInTheDocument();
+    expect(screen.getByText("Trạng thái")).toBeInTheDocument();
+  });
+
+  /* ---------- MENU ---------- */
+  test("renders action menu", () => {
+    render(<Employee />);
+
+    expect(screen.getByTestId("menu")).toBeInTheDocument();
+    expect(screen.getAllByTestId("menu-item").length).toBeGreaterThan(0);
   });
 });

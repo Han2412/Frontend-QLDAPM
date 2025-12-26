@@ -1,89 +1,115 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Productlist from "../../src/pages/product/index";
 
-// Mock the hooks
+/* =========================
+   MOCK MODALS
+========================= */
+jest.mock("../../src/pages/product/ModalAddProduct", () => () => (
+  <div>ModalAddProduct</div>
+));
+
+jest.mock("../../src/pages/product/ModalAddCategor", () => () => (
+  <div>ModalAddCategor</div>
+));
+
+jest.mock("../../src/pages/product/ModalEditProduct", () => () => (
+  <div>ModalEditProduct</div>
+));
+
+/* =========================
+   MOCK RTK QUERY
+========================= */
+const mockDelete = jest.fn(() => ({
+  unwrap: jest.fn().mockResolvedValue({}),
+}));
+
 jest.mock("../../src/store/Slices/categorySlide", () => ({
-  useGetAllCategoriesQuery: jest.fn(() => ({
+  useGetAllCategoriesQuery: () => ({
     data: [
       { id: "1", name: "Cơm" },
       { id: "2", name: "Bánh" },
-      { id: "3", name: "Nước" },
     ],
     isLoading: false,
-  })),
+  }),
 }));
 
 jest.mock("../../src/store/Slices/productSlice", () => ({
-  useGetAllProductsQuery: jest.fn(() => ({
+  useGetAllProductsQuery: () => ({
     data: [
-      { id: "1", name: "Cơm Chiên", size: "M", price: "50000", category: "Cơm" },
-      { id: "2", name: "Bánh Mì", size: "L", price: "30000", category: "Bánh" },
+      {
+        id: "1",
+        name: "Cơm Chiên",
+        price: "50000",
+        categoryID: "1",
+        imageURL: "test.png",
+      },
     ],
-    setProducts: jest.fn(),
     isLoading: false,
-  })),
-  useDeleteProductMutation: jest.fn(() => [jest.fn()]),
+  }),
+  useDeleteProductMutation: () => [
+    mockDelete,
+    { isLoading: false },
+  ],
 }));
 
-describe("Product List Component", () => {
+/* =========================
+   TEST SUITE
+========================= */
+describe("Productlist Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    window.confirm = jest.fn(() => true);
+    jest.spyOn(window, "confirm").mockReturnValue(true);
+    jest.spyOn(window, "alert").mockImplementation(() => {});
   });
 
-  test("renders Product list page", () => {
+  test("renders page title", () => {
     render(<Productlist />);
     expect(screen.getByText("Danh sách sản phẩm")).toBeInTheDocument();
   });
 
-  test("displays page title with correct styling", () => {
-    const { container } = render(<Productlist />);
-    const title = container.querySelector("h1");
-    expect(title).toHaveClass("font-semibold", "text-3xl");
-  });
-
-  test("renders add category button", () => {
+  test("renders product name and price", () => {
     render(<Productlist />);
-    const button = screen.getByRole("button", { name: "+" });
-    expect(button).toBeInTheDocument();
+    expect(screen.getByText("Cơm Chiên")).toBeInTheDocument();
+    expect(screen.getByText("50000")).toBeInTheDocument();
   });
 
-  test("add button has correct styling", () => {
+  test("renders category name using categoryID", () => {
     render(<Productlist />);
-    const button = screen.getByRole("button", { name: "+" });
-    expect(button).toHaveClass("bg-[#0BB783]", "text-white");
+
+    const table = screen.getByRole("table");
+    const tbody = table.querySelector("tbody");
+
+    expect(within(tbody).getByText("Cơm")).toBeInTheDocument();
   });
 
-  test("renders category buttons", () => {
+  test("opens add product modal", () => {
     render(<Productlist />);
-    // Categories should be rendered
-    const { container } = render(<Productlist />);
-    const categoryButtons = container.querySelectorAll(".hover\\:border-\\[\\#0BB783\\]");
-    expect(categoryButtons.length).toBeGreaterThanOrEqual(0);
+    fireEvent.click(screen.getByText("Thêm"));
+    expect(screen.getByText("ModalAddProduct")).toBeInTheDocument();
   });
 
-  test("renders product table", () => {
-    const { container } = render(<Productlist />);
-    const table = container.querySelector("table");
-    expect(table).toBeInTheDocument();
+  test("opens edit product modal", () => {
+    render(<Productlist />);
+
+    const tbody = screen.getByRole("table").querySelector("tbody");
+    const buttons = within(tbody).getAllByRole("button");
+
+    fireEvent.click(buttons[0]);
+
+    expect(screen.getByText("ModalEditProduct")).toBeInTheDocument();
   });
 
-  test("table has thead with border", () => {
-    const { container } = render(<Productlist />);
-    const thead = container.querySelector("thead");
-    expect(thead).toHaveClass("border");
-  });
+  test("calls delete mutation when clicking delete", async () => {
+    render(<Productlist />);
 
-  test("has proper layout structure", () => {
-    const { container } = render(<Productlist />);
-    const wrapper = container.firstChild;
-    expect(wrapper).toHaveClass("bg-white", "h-full", "rounded-lg");
-  });
+    const tbody = screen.getByRole("table").querySelector("tbody");
+    const buttons = within(tbody).getAllByRole("button");
 
-  test("page is scrollable for categories", () => {
-    const { container } = render(<Productlist />);
-    const categoryContainer = container.querySelector(".overflow-x-auto");
-    expect(categoryContainer).toBeInTheDocument();
+    fireEvent.click(buttons[1]);
+
+    await waitFor(() => {
+      expect(mockDelete).toHaveBeenCalledWith("1");
+    });
   });
 });

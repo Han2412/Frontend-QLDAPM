@@ -1,11 +1,11 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import Sale from "../../src/pages/Sales";
 import { toast } from "react-toastify";
-import Sale from "../../src/pages/Sales/index";
 
-// Mock the hooks
+/* ================= MOCK ORDER QUERY ================= */
 jest.mock("../../src/store/Slices/orderSlice", () => ({
-  useGetAllOrderQuery: jest.fn(() => ({
+  useGetAllOrderQuery: () => ({
     data: [
       {
         id: "1",
@@ -36,16 +36,22 @@ jest.mock("../../src/store/Slices/orderSlice", () => ({
     ],
     isLoading: false,
     error: null,
-  })),
+  }),
+}));
+
+/* ================= MOCK PAYMENT ================= */
+const mockCreatePayment = jest.fn(() => ({
+  unwrap: jest.fn().mockResolvedValue({}),
 }));
 
 jest.mock("../../src/store/Slices/paymentSlide", () => ({
-  useCreatePaymentMutation: jest.fn(() => [
-    jest.fn((data) => Promise.resolve({ unwrap: () => Promise.resolve() })),
+  useCreatePaymentMutation: () => [
+    mockCreatePayment,
     { isLoading: false },
-  ]),
+  ],
 }));
 
+/* ================= MOCK TOAST ================= */
 jest.mock("react-toastify", () => ({
   toast: {
     success: jest.fn(),
@@ -54,58 +60,42 @@ jest.mock("react-toastify", () => ({
   },
 }));
 
+/* ================= TEST SUITE ================= */
 describe("Sales/Sale Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test("renders Sales page with title", () => {
+  test("renders page title", () => {
     render(<Sale />);
     expect(screen.getByText("Danh sách order")).toBeInTheDocument();
   });
 
   test("displays order list", () => {
     render(<Sale />);
-    expect(screen.getByText(/Order #/)).toBeInTheDocument();
+    expect(screen.getAllByText(/Order #/).length).toBeGreaterThan(0);
   });
 
   test("displays staff name in orders", () => {
     render(<Sale />);
-    expect(screen.getByText(/NV: John/)).toBeInTheDocument();
+    expect(screen.getByText("NV: John")).toBeInTheDocument();
+    expect(screen.getByText("NV: Jane")).toBeInTheDocument();
   });
 
   test("displays table number", () => {
     render(<Sale />);
-    expect(screen.getByText(/Bàn:/)).toBeInTheDocument();
+    expect(screen.getAllByText(/Bàn:/).length).toBeGreaterThan(0);
   });
 
   test("calculates total bill correctly", () => {
-    const { container } = render(<Sale />);
-    // The page should render without errors
-    expect(container).toBeInTheDocument();
+    render(<Sale />);
+    expect(screen.getByText(/100,000/)).toBeInTheDocument();
+    expect(screen.getByText(/30,000/)).toBeInTheDocument();
   });
 
-  test("has grid layout for orders", () => {
-    const { container } = render(<Sale />);
-    const gridContainer = container.querySelector(".grid");
-    expect(gridContainer).toBeInTheDocument();
-  });
-
-  test("renders with proper styling", () => {
-    const { container } = render(<Sale />);
-    const wrapper = container.querySelector(".bg-white");
-    expect(wrapper).toHaveClass("rounded-lg", "h-full", "font-semibold");
-  });
-
-  test("displays bold title", () => {
-    const { container } = render(<Sale />);
-    const title = container.querySelector("h2");
-    expect(title).toHaveClass("font-bold", "text-2xl");
-  });
-
-  test("shows multiple orders", () => {
-    const { container } = render(<Sale />);
-    const orders = container.querySelectorAll(".border-2");
-    expect(orders.length).toBeGreaterThan(0);
+  test("renders multiple orders", () => {
+    render(<Sale />);
+    const orders = screen.getAllByText(/Order #/);
+    expect(orders.length).toBe(2);
   });
 });
