@@ -5,6 +5,8 @@ import routesConfig from "./routes/routesConfig.jsx";
 import LoadingSpinner from "./components/LoadingSpiner.jsx";
 
 function App() {
+  console.log("🚀 ~ 2000:", 2000);
+
   const element = useRoutes(routesConfig);
 
   return <Suspense fallback={<LoadingSpinner />}>{element}</Suspense>;
