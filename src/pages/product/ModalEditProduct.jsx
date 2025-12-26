@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useGetAllCategoriesQuery } from "../../store/Slices/categorySlide";
-import { useUpdateProductMutation} from "../../store/Slices/productSlice";
+import { useUpdateProductMutation } from "../../store/Slices/productSlice";
 import Input from "../../components/Input";
 
 export default function ModalEditProduct({ isOpen, onClose, product }) {
@@ -15,6 +15,7 @@ export default function ModalEditProduct({ isOpen, onClose, product }) {
     isavailable: 1,
     imageFile: null,
   });
+  console.log("🚀 ~ ModalEditProduct ~ editedProduct:", editedProduct);
 
   // Khi mở modal, gán dữ liệu sản phẩm cũ vào form
   useEffect(() => {
@@ -23,10 +24,10 @@ export default function ModalEditProduct({ isOpen, onClose, product }) {
         name: product.name || "",
         price: product.price || "",
         categoryID: product.categoryID || "",
-        isavailable: product.isavailable ?? 1,  
-        imageFile:null,
+        isavailable: product.isavailable ?? 1,
+        imageFile: null,
       });
-      console.log("product",product);
+      console.log("product", product);
       setPreviewImage(product.imageURl || null);
     }
   }, [product]);
@@ -40,6 +41,7 @@ export default function ModalEditProduct({ isOpen, onClose, product }) {
       setPreviewImage(URL.createObjectURL(file));
     }
   };
+  console.log("🚀 ~ handleUpdate ~ previewImage:", previewImage);
 
   const handleUpdate = async () => {
     const formData = new FormData();
@@ -47,9 +49,7 @@ export default function ModalEditProduct({ isOpen, onClose, product }) {
     formData.append("price", editedProduct.price);
     formData.append("categoryID", editedProduct.categoryID);
     formData.append("isvAilable", editedProduct.isavailable);
-    if (editedProduct.imageFile) {
-      formData.append("imageURL", editedProduct.imageFile);
-    }
+    formData.append("imageURL", editedProduct.imageFile || previewImage);
 
     try {
       const result = await updateProduct({
@@ -112,10 +112,8 @@ export default function ModalEditProduct({ isOpen, onClose, product }) {
               onChange={handleImageChange}
               className="border p-2 rounded-lg"
             />
-            <div>
-            
-            </div>
-             {previewImage ? (
+            <div></div>
+            {previewImage ? (
               <img
                 src={previewImage}
                 alt="Preview"

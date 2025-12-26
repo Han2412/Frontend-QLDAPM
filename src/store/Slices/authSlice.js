@@ -42,6 +42,12 @@ const AuthAPI = createApi({
         data: data,
       }),
     }),
+    getProfile: build.query({
+      query: () => ({
+        url: "/auth/get_profile",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -51,6 +57,7 @@ export const {
   useGetAllAccountQuery,
   useGetOneAccountQuery,
   useUpdateAccountMutation,
-  useRegisterMutation
+  useRegisterMutation,
+  useGetProfileQuery
 } = AuthAPI;
 export default AuthAPI;

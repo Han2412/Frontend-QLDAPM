@@ -9,18 +9,23 @@ import {
 } from "../../store/Slices/authSlice";
 import { useState } from "react";
 
-const options = ["xóa", "sửa"];
 const ITEM_HEIGHT = 48;
 
 function Employee() {
   const [updateAccount] = useUpdateAccountMutation();
   const { data, refetch } = useGetAllAccountQuery();
+  const [options, setOption] = useState(["xóa", "sửa"]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event, employee) => {
+    if (employee.status === 1) {
+      setOption(["xóa", "sửa"]);
+    } else {
+      setOption(["hoàn tác"]);
+    }
     setAnchorEl(event.currentTarget);
     setSelectedEmployee(employee);
   };
@@ -50,7 +55,6 @@ function Employee() {
           </p>
         );
       case 0:
-      case 2:
         return (
           <p className="bg-red-500 text-white rounded-lg px-2 py-1 w-[150px]">
             không hoạt động
@@ -78,24 +82,25 @@ function Employee() {
     }
   };
 
-  const handleSeclect = async ({ option, id }) => {
+  const handleSeclect = async ({ option, id, status }) => {
+    console.log("🚀 ~ handleSeclect ~ option:", option);
+    console.log("🚀 ~ handleSeclect ~ status:", status);
+
     handleClose(); // đóng menu
     if (option === "sửa") {
       setSeclectID(id);
       setOpenModal(true);
-    } else if (option === "xóa") {
+    } else if (option === "xóa" || "hoàn tác") {
       try {
         await updateAccount({
           id,
           data: {
-            status: 0,
+            status: status === 1 ? 0 : 1,
           },
         });
-        alert("Xóa tài khoản thành công!");
         refetch(); // 🔁 Gọi lại API để cập nhật danh sách
       } catch (error) {
         console.error("Lỗi khi xóa tài khoản:", error);
-        alert("Xóa tài khoản thất bại!");
       }
     }
   };
@@ -107,9 +112,9 @@ function Employee() {
       <div className="flex justify-end py-2 pr-5">
         <button
           onClick={handleOpenModal}
-          className="bg-[#4254FB] text-white rounded-[50%] p-2 active:bg-[#2439f7] h-[40px] w-[40px]"
+          className="bg-[#0BB783] text-white rounded p-2 active:bg-[#0BB783] "
         >
-          +
+          thêm nhân viên
         </button>
       </div>
 
@@ -171,6 +176,7 @@ function Employee() {
               handleSeclect({
                 option: option,
                 id: selectedEmployee?.id,
+                status: selectedEmployee.status,
               })
             }
           >

@@ -59,9 +59,9 @@ export default function Productlist() {
             onClick={() => {
               setIsOpenodaladdCategor(true);
             }}
-            className="bg-[#0BB783] text-white rounded-[50%] p-2 mr-3 mt-4 active:bg-green-300 h-[40px] w-[40px]"
+            className="bg-[#0BB783] text-white rounded p-2 mr-3 mt-4 active:bg-green-300 "
           >
-            +
+            thêm danh mục sản phẩm
           </button>
         </div>
 
@@ -101,7 +101,9 @@ export default function Productlist() {
                 <td className="border p-2 text-center ">
                   {categories.find((c) => c.id === p.categoryID)?.name}
                 </td>
-                <td className="border p-2 text-center ">{p.price}</td>
+                <td className="border p-2 text-center ">
+                  {p.price?.toLocaleString()}đ
+                </td>
                 <td className="border-t p-2 text-center  flex justify-center gap-2">
                   <button
                     size="sm "

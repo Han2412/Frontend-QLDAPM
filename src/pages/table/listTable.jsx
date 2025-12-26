@@ -5,7 +5,6 @@ import {
 } from "../../store/Slices/Table";
 import OrderModalEditTable from "./OrderModalEditTable";
 import { RiReservedLine } from "react-icons/ri";
-import { GrConfigure } from "react-icons/gr";
 function ListTable() {
   const { data, isLoading, error } = useGetAllTableQuery();
   const [openModal, setOpenModal] = useState(false);
@@ -34,6 +33,7 @@ function ListTable() {
   return (
     <div>
       <div>
+        <h1 className="font-bold text-2xl pl-5 pt-2 mb-2">Quản lý bàn</h1>
         <div className="flex justify-between items-center ">
           <div className="flex pb-3 items-center gap-2">
             <div className="flex gap-2 items-center">

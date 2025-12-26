@@ -11,6 +11,7 @@ import Sale from "../pages/Sales";
 import ProtectedRoute from "./ProtectedRoute";
 import PatenderPage from "../pages/PatenderPage";
 import Table from "../pages/table";
+import ProfilePage from "../pages/ProfilePage";
 
 const Home = lazy(() => import("../pages/Dashboard/Home"));
 const Productlist = lazy(() => import("../pages/product"));
@@ -41,7 +42,6 @@ const routesConfig = [
     ),
   },
 
-  // Admin (roleID = 1)
   {
     path: "/",
     element: (
@@ -56,6 +56,7 @@ const routesConfig = [
       { path: "/bills", index: true, element: <Bills /> },
       { path: "/sales", index: true, element: <Sale /> },
       { path: "/table", index: true, element: <Table /> },
+      { path: "/profile", index: true, element: <ProfilePage /> },
     ],
   },
 

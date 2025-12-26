@@ -71,16 +71,18 @@ export default function Bills() {
           </thead>
           <tbody>
             {bills.length > 0 ? (
-              bills.map((item) => (
+              bills.map((item, index) => (
                 <tr key={item.id} className="text-center hover:bg-gray-50">
-                  <td className="px-4 py-2 border">{item.id}</td>
+                  <td className="px-4 py-2 border">{index + 1}</td>
                   <td className="px-4 py-2 border">
                     {new Date(item.created_at).toLocaleDateString("vi-VN")}
                   </td>
                   <td className="px-4 py-2 border">
                     {new Date(item.created_at).toLocaleTimeString("vi-VN")}
                   </td>
-                  <td className="px-4 py-2 border">{item.orderid}</td>
+                  <td className="px-4 py-2 border">
+                    {item.order.createdByName}
+                  </td>
                   <td className="px-4 py-2 border">
                     {item.totalAmount?.toLocaleString("vi-VN")} VNĐ
                   </td>

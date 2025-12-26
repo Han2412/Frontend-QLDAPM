@@ -8,7 +8,7 @@ import Input from "../../components/Input";
 
 // ✅ Schema validate với Yup
 const schema = yup.object().shape({
-  name: yup.string().required("Tên sản phẩm không được để trống"),
+  // name: yup.string().required("Tên sản phẩm không được để trống"),
   price: yup
     .number()
     .required("Vui lòng nhập giá sản phẩm")

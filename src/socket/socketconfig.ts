@@ -1,3 +1,3 @@
 import ioClient from "socket.io-client";
 
-export const socket = ioClient("http://localhost:3000");
+export const socket = ioClient("https://qldapm-qlcf-be.onrender.com");
