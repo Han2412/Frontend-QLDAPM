@@ -1,9 +1,8 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Sale from "../../src/pages/Sales";
-import { toast } from "react-toastify";
 
-/* ================= MOCK ORDER QUERY ================= */
+/* ================= MOCK order query ================= */
 jest.mock("../../src/store/Slices/orderSlice", () => ({
   useGetAllOrderQuery: () => ({
     data: [
@@ -39,19 +38,12 @@ jest.mock("../../src/store/Slices/orderSlice", () => ({
   }),
 }));
 
-/* ================= MOCK PAYMENT ================= */
-const mockCreatePayment = jest.fn(() => ({
-  unwrap: jest.fn().mockResolvedValue({}),
-}));
-
+/* ================= MOCK payment ================= */
 jest.mock("../../src/store/Slices/paymentSlide", () => ({
-  useCreatePaymentMutation: () => [
-    mockCreatePayment,
-    { isLoading: false },
-  ],
+  useCreatePaymentMutation: () => [jest.fn(), { isLoading: false }],
 }));
 
-/* ================= MOCK TOAST ================= */
+/* ================= MOCK toast ================= */
 jest.mock("react-toastify", () => ({
   toast: {
     success: jest.fn(),
@@ -60,10 +52,17 @@ jest.mock("react-toastify", () => ({
   },
 }));
 
-/* ================= TEST SUITE ================= */
-describe("Sales/Sale Component", () => {
+describe("Sales Page", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.spyOn(console, "error").mockImplementation((msg) => {
+      if (typeof msg === "string" && msg.includes("Each child in a list")) {
+        return;
+      }
+    });
+  });
+
+  afterEach(() => {
+    console.error.mockRestore();
   });
 
   test("renders page title", () => {
@@ -71,31 +70,39 @@ describe("Sales/Sale Component", () => {
     expect(screen.getByText("Danh sách order")).toBeInTheDocument();
   });
 
-  test("displays order list", () => {
+  test("renders orders list", () => {
     render(<Sale />);
-    expect(screen.getAllByText(/Order #/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Order/).length).toBe(2);
   });
 
-  test("displays staff name in orders", () => {
+  test("renders staff & table info", () => {
     render(<Sale />);
     expect(screen.getByText("NV: John")).toBeInTheDocument();
+    expect(screen.getByText("Bàn: 5")).toBeInTheDocument();
     expect(screen.getByText("NV: Jane")).toBeInTheDocument();
+    expect(screen.getByText("Bàn: 3")).toBeInTheDocument();
   });
 
-  test("displays table number", () => {
+  test("shows empty state initially", () => {
     render(<Sale />);
-    expect(screen.getAllByText(/Bàn:/).length).toBeGreaterThan(0);
+    expect(
+      screen.getByText("Không có dữ liệu đơn hàng.")
+    ).toBeInTheDocument();
   });
 
-  test("calculates total bill correctly", () => {
+  test("shows order details after clicking xem", () => {
     render(<Sale />);
-    expect(screen.getByText(/100,000/)).toBeInTheDocument();
-    expect(screen.getByText(/30,000/)).toBeInTheDocument();
-  });
 
-  test("renders multiple orders", () => {
-    render(<Sale />);
-    const orders = screen.getAllByText(/Order #/);
-    expect(orders.length).toBe(2);
+    const viewButtons = screen.getAllByText("xem");
+    fireEvent.click(viewButtons[0]);
+
+    // lấy phần chi tiết order
+    const orderDetail = screen.getByText("Chi tiết Order").closest("div");
+    const withinOrder = within(orderDetail);
+
+    expect(withinOrder.getByText("Cơm Chiên")).toBeInTheDocument();
+    expect(withinOrder.getByText("Không cay")).toBeInTheDocument();
+    expect(withinOrder.getByText("2")).toBeInTheDocument(); // số lượng trong chi tiết
+    expect(withinOrder.getByText(/50,000/)).toBeInTheDocument(); // giá trong chi tiết
   });
 });

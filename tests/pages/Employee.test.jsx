@@ -4,14 +4,12 @@ import Employee from "../../src/pages/Employee/index";
 
 /* ================= MOCK RTK QUERY ================= */
 jest.mock("../../src/store/Slices/authSlice", () => ({
-  /* ----- LIST ACCOUNT ----- */
   useGetAllAccountQuery: () => ({
     data: [],
     isLoading: false,
     refetch: jest.fn(),
   }),
 
-  /* ----- GET ONE ACCOUNT ----- */
   useGetOneAccountQuery: () => ({
     data: null,
     isLoading: false,
@@ -19,13 +17,11 @@ jest.mock("../../src/store/Slices/authSlice", () => ({
     refetch: jest.fn(),
   }),
 
-  /* ----- UPDATE ACCOUNT ----- */
   useUpdateAccountMutation: () => [
     jest.fn(),
     { isLoading: false },
   ],
 
-  /* ----- REGISTER ACCOUNT ----- */
   useRegisterMutation: () => [
     jest.fn(),
     { isLoading: false },
@@ -42,7 +38,6 @@ jest.mock("@mui/material/MenuItem", () => ({ children }) => (
 ));
 
 describe("Employee Component", () => {
-  /* ---------- TITLE ---------- */
   test("renders employee page title", () => {
     render(<Employee />);
     expect(
@@ -50,13 +45,13 @@ describe("Employee Component", () => {
     ).toBeInTheDocument();
   });
 
-  /* ---------- ADD BUTTON ---------- */
   test("renders add employee button", () => {
     render(<Employee />);
-    expect(screen.getByText("+")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /thêm nhân viên/i })
+    ).toBeInTheDocument();
   });
 
-  /* ---------- TABLE STRUCTURE ---------- */
   test("renders employee table headers", () => {
     render(<Employee />);
 
@@ -67,7 +62,6 @@ describe("Employee Component", () => {
     expect(screen.getByText("Trạng thái")).toBeInTheDocument();
   });
 
-  /* ---------- MENU ---------- */
   test("renders action menu", () => {
     render(<Employee />);
 
