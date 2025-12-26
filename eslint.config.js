@@ -22,8 +22,21 @@ export default defineConfig([
         sourceType: 'module',
       },
     },
+    overrides: [
+      {
+        files: ["**/__tests__/**/*.{js,jsx}", "**/tests/**/*.{js,jsx}", "**/*.test.{js,jsx}"],
+        env: {
+          jest: true,
+        },
+        languageOptions: {
+          globals: { ...globals.browser, ...globals.jest },
+        },
+      },
+    ],
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
+
+    
   },
 ])

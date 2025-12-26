@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose",
+    "test:bail": "jest --bail",
+    "test:component": "jest --testPathPattern=components",
+    "test:store": "jest --testPathPattern=store"
+  }
+}
